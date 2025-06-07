@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id           String         @id @default(uuid()) @db.Uuid
+  username     String         @unique
+  password     String
+  role         Role
+  createdAt    DateTime       @default(now())
+  shoppinglist ShoppingList[]
+  todolist     ToDoList[]
+  reservations Reservation[]  @relation("ReservationUser")
+  approvals    Reservation[]  @relation("ReservationApproval")
+}
+
+model ShoppingList {
+  id        String   @id @default(uuid()) @db.Uuid
+  itemName  String
+  addedBy   User     @relation(fields: [addedById], references: [id])
+  addedById String   @db.Uuid
+  isBought  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model ToDoList {
+  id          String   @id @default(uuid()) @db.Uuid
+  task        String
+  addedBy     User     @relation(fields: [addedById], references: [id])
+  addedById   String   @db.Uuid
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+}
+
+model Reservation {
+  id           String            @id @default(uuid()) @db.Uuid
+  user         User              @relation("ReservationUser", fields: [userId], references: [id])
+  userId       String            @db.Uuid
+  title        String?
+  startDate    DateTime
+  endDate      DateTime
+  status       ReservationStatus @default(PENDING)
+  description  String?
+  adminComment String?
+  approvedBy   User?             @relation("ReservationApproval", fields: [approvedById], references: [id])
+  approvedById String?           @db.Uuid
+  createdAt    DateTime          @default(now())
+
+  @@unique([userId, startDate, endDate])
+}
+
+model DummyShoppingList {
+  id       String  @id @default(uuid()) @db.Uuid
+  itemName String
+  addedBy  String
+  isBought Boolean @default(false)
+}
+
+model DummyToDoList {
+  id          String  @id @default(uuid()) @db.Uuid
+  task        String
+  addedBy     String
+  isCompleted Boolean @default(false)
+}
+
+model DummyReservation {
+  id          String            @id @default(uuid()) @db.Uuid
+  userId      String
+  title       String?
+  startDate   DateTime
+  endDate     DateTime
+  status      ReservationStatus @default(PENDING)
+  description String?
+}
+
+enum Role {
+  ADMIN
+  REGULAR
+  DUMMY
+}
+
+enum ReservationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
