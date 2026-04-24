@@ -6,8 +6,8 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint",
-        "lintandprettier": "next lint && prettier --check .",
+        "lint": "eslint .",
+        "lintandprettier": "eslint . && prettier --check .",
         "format": "prettier --write .",
         "format:check": "prettier --check './**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
         "postinstall": "prisma generate"
