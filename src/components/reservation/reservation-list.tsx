@@ -44,12 +44,6 @@ export default function ReservationList() {
     const isAdmin = session?.user?.role === 'ADMIN';
     const isDummy = session?.user?.role === 'DUMMY';
 
-    useEffect(() => {
-        if (sessionStatus === 'loading') return;
-
-        fetchReservations();
-    }, [sessionStatus, refreshTrigger]);
-
     const fetchReservations = async () => {
         try {
             setIsLoading(true);
@@ -69,6 +63,12 @@ export default function ReservationList() {
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (sessionStatus === 'loading') return;
+
+        fetchReservations();
+    }, [sessionStatus, refreshTrigger]);
 
     const handleRefresh = () => {
         setRefreshTrigger(prev => prev + 1);

@@ -26,10 +26,6 @@ export default function TodoList() {
 
     const isDummy = session?.user?.role === 'DUMMY';
 
-    useEffect(() => {
-        fetchTodos();
-    }, []);
-
     const fetchTodos = async () => {
         try {
             setIsLoading(true);
@@ -44,6 +40,10 @@ export default function TodoList() {
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        fetchTodos();
+    }, []);
 
     const handleUpdate = (updated: ToDoItem) => {
         setTodos(prev => prev.map(t => (t.id === updated.id ? updated : t)));
