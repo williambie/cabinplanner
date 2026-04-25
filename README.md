@@ -33,10 +33,12 @@ unngå misforståelser og gjøre hytteopplevelsen enda bedre for alle 🫶
 ## 👤 Brukere & Roller
 
 - 👤 **Vanlige brukere** kan:
+
     - Se og redigere handleliste og gjøremål.
     - Forespør hytta for en periode.
 
 - 🛡️ **Admin** kan i tillegg:
+
     - Godkjenne eller avslå reservasjoner.
     - Se hele kalenderen og hvem som har forespurt hva.
 
