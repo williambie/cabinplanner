@@ -41,12 +41,6 @@ export default function AdminDashboard() {
     const isAdmin = session?.user?.role === 'ADMIN';
     const isDummy = session?.user?.role === 'DUMMY';
 
-    useEffect(() => {
-        if (status === 'loading') return;
-
-        fetchReservations();
-    }, [status, refreshTrigger]);
-
     const fetchReservations = async () => {
         try {
             setIsLoading(true);
@@ -66,6 +60,12 @@ export default function AdminDashboard() {
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (status === 'loading') return;
+
+        fetchReservations();
+    }, [status, refreshTrigger]);
 
     const handleRefresh = () => {
         setRefreshTrigger(prev => prev + 1);

@@ -24,10 +24,6 @@ export default function ShoppingList() {
 
     const isDummy = session?.user?.role === 'DUMMY';
 
-    useEffect(() => {
-        fetchItems();
-    }, []);
-
     const fetchItems = async () => {
         try {
             setIsLoading(true);
@@ -46,6 +42,10 @@ export default function ShoppingList() {
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        fetchItems();
+    }, []);
 
     const handleUpdate = (updated: ShoppingListItem) => {
         setItems(prev =>
